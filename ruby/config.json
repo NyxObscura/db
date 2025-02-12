@@ -1,0 +1,11 @@
+{
+    "ownerBot": [
+        "6285172153663"
+    ],
+    "database": {
+        "host": "139.59.117.76",
+        "user": "root",
+        "password": "panel",
+        "database": "obscura_db"
+    }
+}
