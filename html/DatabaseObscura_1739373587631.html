@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5tBNFuyQfjkiDXZ4mTREmgrsLUbu0wv0s8w&s" type="image/png">
+   <meta property="og:image" content="https://files.catbox.moe/cq4rxb.jpg">
+    <meta property="og:description" content="X-YTDL is a website that provides features to search and download YouTube videos for free without ads!">
+    <title>XYTDL - API DOCUMENTION</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai-sublime.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: "Poppins", sans-serif;
+        background-color: #111;
+        color: #FFFFFF;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+    }
+
+ .navbar {
+        background-color: #111;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .navbar-logo h1 {
+        margin: 0;
+        font-size: 28px;
+        color: #e74c3c;
+        display: flex;
+        align-items: center;
+    }
+    .navbar-logo h1 i {
+        margin-right: 10px;
+    }
+    .navbar-links a {
+        color: #e74c3c;
+        text-decoration: none;
+        margin: 0 15px;
+        font-size: 16px;
+    }
+    .navbar-links a:hover {
+        text-decoration: underline;
+    }
+    
+    .editor {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .tab-bar {
+        display: flex;
+        background: #202020;
+        padding: 10px;
+        border-bottom: 1px solid #303030;
+    }
+
+    .tab-bar .tab {
+        background-color: #383838;
+        padding: 10px 20px;
+        margin-right: 10px;
+        border-radius: 8px 8px 0 0;
+        font-size: 1rem;
+        color: #FFFFFF;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .tab-bar .tab.active {
+        background-color: #e74c3c;
+        transform: translateY(-3px);
+        color: #FFFFFF;
+        font-weight: bold;
+    }
+
+    .tab-bar .tab:hover {
+        background-color: #e74c3c;
+        transform: translateY(-2px);
+    }
+    .editor-panel {
+        flex: 1;
+        padding: 20px;
+        display: none;
+        overflow-y: auto;
+        background-color: #202020;
+        border-radius: 10px;
+    }
+
+    .editor-panel.active {
+        display: block;
+    }
+    .endpoint {
+        margin-bottom: 20px;
+        padding: 15px;
+        background: #202020;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    }
+
+    .endpoint h2 {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.2rem;
+        color: #e74c3c;
+    }
+
+    .method {
+        background-color: #e74c3c;
+        color: #FFFFFF;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+    }
+
+    .code-container {
+        background: #202020;
+        border-radius: 10px;
+        padding: 15px;
+        margin-top: 15px;
+        overflow-x: auto;
+        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .code-container pre {
+        margin: 0;
+        font-size: 0.85rem;
+        line-height: 1.4;
+        color: #FFFFFF;
+    }
+
+    footer {
+        background: #202020;
+        color: #FFFFFF;
+        text-align: center;
+        padding: 10px;
+        font-size: 0.8rem;
+        border-top: 1px solid #303030;
+    }
+
+    footer a {
+        color: #e74c3c;
+        text-decoration: underline;
+        transition: color 0.3s ease;
+    }
+
+    footer a:hover {
+        color: #FFFFFF;
+    }
+
+
+    @media (max-width: 768px) {
+        .tab-bar .tab {
+            padding: 8px 15px;
+            font-size: 0.9rem;
+        }
+
+        .code-container pre {
+            font-size: 0.8rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .navbar-links a {
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+
+        .tab-bar {
+            flex-wrap: wrap;
+        }
+
+        .tab-bar .tab {
+            flex: 1;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+    }
+.footer {
+    background-color: #111;
+    color: #fff;
+    text-align: center;
+    padding: 20px 10px;
+    margin-top: auto;
+}
+
+.footer-content p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.footer-content a {
+    color: #e74c3c;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.footer-content a:hover {
+    color: #fff;
+}
+
+.footer-socials {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.footer-socials a {
+    font-size: 1.5rem;
+    color: #e74c3c;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.footer-socials a:hover {
+    color: #fff;
+    transform: scale(1.2);
+}
+</style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-logo">
+            <h1><i class="fas fa-download"></i> XYTDL</h1>
+        </div>
+        <div class="navbar-links">
+            <a href="/docs"><i class="fas fa-code"></i> API</a>
+            <a href="https://github.com/AxellNetwork/"><i class="fab fa-github"></i> Contact</a>
+        </div>
+    </nav>
+    <div class="editor">
+        <div class="tab-bar">
+            <div class="tab active" onclick="switchTab('tab1')">Endpoints.js</div>
+            <div class="tab" onclick="switchTab('tab2')">Example.js</div>
+        </div>
+        <div id="tab1" class="editor-panel active">
+            <div class="endpoint">
+                <h2><span class="method">GET</span> /api/download/audio</h2>
+                <p>Get info/download audio from YouTube</p>
+           <h3>Parameter :</h3>
+            <table style="width:100%; border-collapse: collapse; background: #303030; color: #FFFFFF; border: 1px solid #444; margin-top: 15px;">
+            <thead>
+                <tr style="background: #404040; text-align: left;">
+                    <th style="padding: 10px; border: 1px solid #444;">Parameter</th>
+                    <th style="padding: 10px; border: 1px solid #444;">Type</th>
+                    <th style="padding: 10px; border: 1px solid #444;">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #444;">url</td>
+                    <td style="padding: 10px; border: 1px solid #444;">string</td>
+                    <td style="padding: 10px; border: 1px solid #444;">URL of the YouTube video.</td>
+               </tr>                
+                 <tr>
+                    <td style="padding: 10px; border: 1px solid #444;">quality</td>
+                    <td style="padding: 10px; border: 1px solid #444;">string</td>
+                    <td style="padding: 10px; border: 1px solid #444;">Custom bitrate for download YouTube audio ( Opsional ).</td>
+                </tr
+               </tbody>
+            </table>
+                <div class="code-container">
+                   <p>Response JSON : </p>
+                    <pre><code class="language-javascript">
+{
+  "metadata": {
+    "title": "Virgoun - Surat Cinta Untuk Starla (tiktok version)",
+    "url": "https://www.youtube.com/watch?v=ake34OFunrE",
+    "videoId": "ake34OFunrE",
+    "duration": "289",
+    "views": "994446",
+    "thumbnail": {
+      "url": "https://i.ytimg.com/vi_webp/ake34OFunrE/maxresdefault.webp",
+      "width": 1920,
+      "height": 1080
+    },
+    "likes": 13471,
+    "description": "Makasih udah nonton + subscribe \n\nOfficial Music:\nhttps://youtu.be/FocFked1TbQ?si=FFVoKqwsFKZgiUPw\n\nPhoto:\nhttps://pin.it/kyB1S1c\n\n\nbuat ngopi🙏🏻\n\nhttps://saweria.co/Akioo",
+    "author": "akio"
+  },
+  "downloads": {
+    "url": "https://ytdl.axeel.my.id/media/?id=3e81c71218ff30e51d3a3ce62dfe7b29&token=5972a3602645b8406c932dcc89bbf14cc94d05c30b6fd995bcc0d313083d4ea2&expired=1737439985742",
+    "mimetype": "audio/mpeg"
+  }
+}
+                    </code></pre>
+                </div>
+            </div>
+            <div class="endpoint">
+              <h2><span class="method">GET</span> /api/download/video/</h2>
+                <p>Get info/download Video from YouTube</p>
+           <h3>Parameter :</h3>
+            <table style="width:100%; border-collapse: collapse; background: #303030; color: #FFFFFF; border: 1px solid #444; margin-top: 15px;">
+            <thead>
+                <tr style="background: #404040; text-align: left;">
+                    <th style="padding: 10px; border: 1px solid #444;">Parameter</th>
+                    <th style="padding: 10px; border: 1px solid #444;">Type</th>
+                    <th style="padding: 10px; border: 1px solid #444;">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #444;">url</td>
+                    <td style="padding: 10px; border: 1px solid #444;">string</td>
+                    <td style="padding: 10px; border: 1px solid #444;">URL of the YouTube video.</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #444;">quality</td>
+                    <td style="padding: 10px; border: 1px solid #444;">string</td>
+                    <td style="padding: 10px; border: 1px solid #444;">Custom resolution for download YouTube video ( Opsional ).</td>
+                </tr>
+               </tbody>
+            </table>
+                <div class="code-container">
+                   <p>Response JSON : </p>
+                    <pre><code class="language-javascript">
+{
+  "metadata": {
+    "title": "Virgoun - Surat Cinta Untuk Starla (tiktok version)",
+    "url": "https://www.youtube.com/watch?v=ake34OFunrE",
+    "videoId": "ake34OFunrE",
+    "duration": "289",
+    "views": "994446",
+    "thumbnail": {
+      "url": "https://i.ytimg.com/vi/ake34OFunrE/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAEhrdqXycf-Xoi8Zs2YyEltYqbjw",
+      "width": 336,
+      "height": 188
+    },
+    "likes": 13471,
+    "description": "Makasih udah nonton + subscribe \n\nOfficial Music:\nhttps://youtu.be/FocFked1TbQ?si=FFVoKqwsFKZgiUPw\n\nPhoto:\nhttps://pin.it/kyB1S1c\n\n\nbuat ngopi🙏🏻\n\nhttps://saweria.co/Akioo",
+    "author": "akio"
+  },
+  "downloads": {
+    "url": "https://ytdl.axeel.my.id/media/?id=fe9adf872d088bedd459b35b8bd7f18c&token=4e0f0d1c93744dee0c9a6d9b2c89b83dffb16fae393cc455c7c267bd5b8cec65&expired=1737439930993",
+    "mimetype": "video/mp4"
+  }
+}
+                    </code></pre>
+                </div>
+            </div>
+        <div class="endpoint">
+              <h2><span class="method">GET</span> /api/playlist</h2>
+                <p>Get YouTube url from Playlist</p>
+           <h3>Parameter :</h3>
+            <table style="width:100%; border-collapse: collapse; background: #303030; color: #FFFFFF; border: 1px solid #444; margin-top: 15px;">
+            <thead>
+                <tr style="background: #404040; text-align: left;">
+                    <th style="padding: 10px; border: 1px solid #444;">Parameter</th>
+                    <th style="padding: 10px; border: 1px solid #444;">Type</th>
+                    <th style="padding: 10px; border: 1px solid #444;">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #444;">url</td>
+                    <td style="padding: 10px; border: 1px solid #444;">string</td>
+                    <td style="padding: 10px; border: 1px solid #444;">URL of the YouTube playlist</td>
+                </tr>
+               </tbody>
+            </table>
+                <div class="code-container">
+                   <p>Response JSON : </p>
+                    <pre><code class="language-javascript">
+[
+  {
+    "title": "Virgoun - Surat Cinta Untuk Starla (tiktok version)",
+    "videoId": "ake34OFunrE",
+    "duration": "4:49",
+    "thumbnail": "https://i.ytimg.com/vi/ake34OFunrE/hqdefault.jpg?sqp=-oaymwEjCNACELwBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLDgp3yIpGtdb0GI4XJvYPnPuPNIzw",
+    "views": "994K",
+    "release": "1 year ago",
+    "author": "akio",
+    "url": "https://youtube.com/watch?v=ake34OFunrE&list=PLCkWlDUNbZAMnVRer3YqLedEb0lOdAYtJ&index=1&pp=iAQB8AUB"
+  },
+  {
+    "title": "Somewhere only we know - keane (slowed +reverb) tiktok version",
+    "videoId": "0xlf9SYcauA",
+    "duration": "4:14",
+    "thumbnail": "https://i.ytimg.com/vi/0xlf9SYcauA/hqdefault.jpg?sqp=-oaymwEjCNACELwBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLBdl502UlhAFMHYUoQLgfXoRenYwg",
+    "views": "2.6M",
+    "release": "1 year ago",
+    "author": "dontcry",
+    "url": "https://youtube.com/watch?v=0xlf9SYcauA&list=PLCkWlDUNbZAMnVRer3YqLedEb0lOdAYtJ&index=2&pp=iAQB8AUB"
+  },
+  {
+    "title": "mary on a cross—ghost; (slowed down + reverb)",
+    "videoId": "-1v9xY0Xpyo",
+    "duration": "4:56",
+    "thumbnail": "https://i.ytimg.com/vi/-1v9xY0Xpyo/hqdefault.jpg?sqp=-oaymwE9CNACELwBSFryq4qpAy8IARUAAAAAGAElAADIQj0AgKJDeAHwAQH4Af4JgALQBYoCDAgAEAEYXSBlKEYwDw==&rs=AOn4CLCz9j1PndszqI5Ni5koLYUvSWSDww",
+    "views": "10M",
+    "release": "4 years ago",
+    "author": "licky wicky",
+    "url": "https://youtube.com/watch?v=-1v9xY0Xpyo&list=PLCkWlDUNbZAMnVRer3YqLedEb0lOdAYtJ&index=3&pp=iAQB8AUB"
+  },
+  {
+    "title": "Yang Telah Merelakanmu - Seventeen (Speed Up, Reverb) TikTok Version",
+    "videoId": "LAaoaQ870oY",
+    "duration": "4:06",
+    "thumbnail": "https://i.ytimg.com/vi/LAaoaQ870oY/hqdefault.jpg?sqp=-oaymwE9CNACELwBSFryq4qpAy8IARUAAAAAGAElAADIQj0AgKJDeAHwAQH4Af4JgALQBYoCDAgAEAEYYyBjKGMwDw==&rs=AOn4CLC171vaufBprd9qyKZ4yYSAR-mxIA",
+    "views": "808K",
+    "release": "1 year ago",
+    "author": "December.",
+    "url": "https://youtube.com/watch?v=LAaoaQ870oY&list=PLCkWlDUNbZAMnVRer3YqLedEb0lOdAYtJ&index=4&pp=iAQB8AUB"
+  },
+  {
+    "title": "#1 Sad Songs Playlist (Lyrics Video) I'm sorry, don't leave me...",
+    "videoId": "XuGKqinH5v0",
+    "duration": "16:18",
+    "thumbnail": "https://i.ytimg.com/vi/XuGKqinH5v0/hqdefault.jpg?sqp=-oaymwEjCNACELwBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLARlCVWQwv-x-lXyezS4WlfZjNLwg",
+    "views": "7.9M",
+    "release": "2 years ago",
+    "author": "Lirikyu",
+    "url": "https://youtube.com/watch?v=XuGKqinH5v0&list=PLCkWlDUNbZAMnVRer3YqLedEb0lOdAYtJ&index=5&pp=iAQB8AUB"
+  }
+]
+                    </code></pre>
+                </div>
+            </div>
+       <div class="endpoint">
+          <h2><span class="method">GET</span> /api/search</h2>
+                <p>Search video YouTube with query</p>
+           <h3>Parameter :</h3>
+            <table style="width:100%; border-collapse: collapse; background: #303030; color: #FFFFFF; border: 1px solid #444; margin-top: 15px;">
+            <thead>
+                <tr style="background: #404040; text-align: left;">
+                    <th style="padding: 10px; border: 1px solid #444;">Parameter</th>
+                    <th style="padding: 10px; border: 1px solid #444;">Type</th>
+                    <th style="padding: 10px; border: 1px solid #444;">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #444;">q</td>
+                    <td style="padding: 10px; border: 1px solid #444;">string</td>
+                    <td style="padding: 10px; border: 1px solid #444;">Query for search YouTube video</td>
+                </tr>
+               </tbody>
+            </table>
+                <div class="code-container">
+                   <p>Response JSON : </p>
+                    <pre><code class="language-javascript">
+[
+  {
+    "title": "+5 Tiktok Trending presets #10 [ XML + QR + CC ] #anime  #alightmotionpresets #jjk #bluelock #naruto",
+    "videoId": "xCF5JlIr7KM",
+    "url": "https://youtube.com/watch?v=xCF5JlIr7KM",
+    "thumbnail": "https://i.ytimg.com/vi/xCF5JlIr7KM/hq720.jpg",
+    "duration": "1:34",
+    "author": "Amrit efx ",
+    "description": "Trends Anime Edits Presets TikTok Trends Anime Edits Pista burfi trend presets Pista burfi trend Anime presets Father mother son ..."
+  },
+  {
+    "title": "PRESET AM ANIME | 2 UKURAN 9:16 & 1:1 | 5MB & XML DJ TIE ME DOWN X KAWENI MERRY KENE🎶🗿",
+    "videoId": "-rFoO0Rdouo",
+    "url": "https://youtube.com/watch?v=-rFoO0Rdouo",
+    "thumbnail": "https://i.ytimg.com/vi/-rFoO0Rdouo/hq720.jpg",
+    "duration": "0:19",
+    "author": "Zax YT",
+    "description": "Preset di komen hastag:#presetalightmotion #presetam#presetam #preset5mbxml #preset5mb :#presetalightmotion ..."
+  },
+]
+                    </code></pre>
+                 </div>
+             </div>
+           </div>
+        <div id="tab2" class="editor-panel">
+            <div class="endpoint">
+                <h2><span class="method">GET</span> /api/download/audio</h2>
+                <div class="code-container">
+                    <pre><code class="language-javascript">
+const axios = require('axios');
+
+axios.get(BASE_URL + '/api/download/audio', { 
+    params: {
+      url: "https://youtu.be/xxxx",
+    },
+    headers: {
+        "Content-type": "application/json",
+        "Accept": "application/json"
+     }
+   })
+    .then(response => console.log(response.data))
+    .catch(error => console.error(error));
+                    </code></pre>
+                </div>
+            </div>
+            <div class="endpoint">
+                <h2><span class="method">GET</span> /api/download/video</h2>
+                <div class="code-container">
+                    <pre><code class="language-javascript">
+const axios = require('axios');
+
+axios.get(BASE_URL + '/api/download/video', { 
+    params: {
+      url: "https://youtu.be/xxxx"
+    },
+    headers: {
+        "Content-type": "application/json",
+        "Accept": "application/json"
+     }
+   })
+    .then(response => console.log(response.data))
+    .catch(error => console.error(error));
+                    </code></pre>
+                </div>
+            </div>
+            <div class="endpoint">
+                <h2><span class="method">GET</span> /api/playlist </h2>
+                <div class="code-container">
+                    <pre><code class="language-javascript">
+const axios = require('axios');
+
+axios.get(BASE_URL + '/api/playlist', { 
+    params: {
+      url: "https://youtu.be/xxxx"
+    },
+    headers: {
+        "Content-type": "application/json",
+        "Accept": "application/json"
+     }
+   })
+    .then(response => console.log(response.data))
+    .catch(error => console.error(error));
+                    </code></pre>
+                </div>
+            </div>
+                        <div class="endpoint">
+                <h2><span class="method">GET</span> /api/search</h2>
+                <div class="code-container">
+                    <pre><code class="language-javascript">
+const axios = require('axios');
+
+axios.get(BASE_URL + '/api/search', { 
+    params: {
+      q: "xxxx",
+    },
+    headers: {
+        "Content-type": "application/json",
+        "Accept": "application/json"
+     }
+   })
+    .then(response => console.log(response.data))
+    .catch(error => console.error(error));
+                    </code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+  <footer class="footer">
+    <div class="footer-content">
+        <p>Developed by <a href="https://github.com/AxellNetwork" target="_blank"><i class="fab fa-github"></i> AxellNetwork</a>
+        </p>
+        <div class="footer-socials">
+            <a href="https://github.com/AxellNetwork" target="_blank" title="GitHub">
+            </a>
+        </div>
+     </div>
+ </footer>
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.editor-panel').forEach(panel => panel.classList.remove('active'));
+            document.querySelector(`.tab[onclick="switchTab('${tabId}')"]`).classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'906447049d3e4aa1',t:'MTczNzU5ODU0Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
